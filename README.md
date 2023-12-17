@@ -38,7 +38,57 @@
 ![ContentCreators Table Indices](https://cdn.discordapp.com/attachments/1136758352274260142/1185776375077015562/image.png?ex=6590d74e&is=657e624e&hm=9d7a4163768c92becaffc90edc9c611a4aa07af4bfa5e70b27e4643bb2123031&)
 
 
+---
+
+# 3.Constraints
+
+### The constraints in my project primarily ensure data integrity and efficiency in the database. They include unique identifiers for key fields to prevent duplicates, character limits for text fields to maintain uniformity and storage efficiency, non-negative constraints on numerical fields to reflect logical data values, datetime fields with default values for consistency
+
+<h3>Relationships & Constraints Explanation</h3>
+
+<ul>
+  <li><strong>Video - Keyword Relationship:</strong>
+    <ul>
+      <li>Allows one video to be associated with multiple keywords and vice versa, enabling rich, multifaceted categorization and searchability of videos.</li>
+      <li>Unique combination of VideoID and KeywordID prevents duplicate associations, ensuring data integrity.</li>
+    </ul>
+  </li>
+
+  <li><strong>Video - Content Creators Relationship:</strong>
+    <ul>
+      <li>Defines a one-to-many relationship where a single creator can produce multiple videos, reflecting real-world content creation dynamics.</li>
+      <li>Each video is linked to one specific creator, ensuring clear attribution and simplifying content management.</li>
+    </ul>
+  </li>
+
+  <li><strong>Video - Video Categories Relationship:</strong>
+    <ul>
+      <li>One category can encompass numerous videos, facilitating organized content categorization.</li>
+      <li>Every video is assigned to a single category for simplified classification and user navigation.</li>
+    </ul>
+  </li>
+
+  <li><strong>Video - Comments Relationship:</strong>
+    <ul>
+      <li>Enables a video to have a varying number of comments, mirroring real user engagement.</li>
+      <li>Links each comment to a specific video, maintaining clarity in discussions.</li>
+    </ul>
+  </li>
+</ul>
+
+<h4>Rules & Constraints:</h4>
+
+<ul>
+  <li>Unique identifiers (VideoID, KeywordID, etc.) prevent data duplication and enable precise querying.</li>
+  <li>Character limits on titles and names ensure data uniformity and storage efficiency.</li>
+  <li>Non-negative constraints on numerical fields like views and likes reflect logical data values.</li>
+  <li>Datetime fields with default values provide temporal context while maintaining data consistency.</li>
+  <li>Indices on frequently queried columns enhance query performance.</li>
+  <li>Cascading options in foreign key relationships safeguard data integrity during updates/deletions.</li>
+</ul>
 ## SQL Table Definitions:
+
+
 
 ```sql
 -- Video Categories
@@ -106,61 +156,12 @@ CREATE TABLE Comments (
 ```
 ---
 
-# 3.Constraints
 
-### The constraints in my project primarily ensure data integrity and efficiency in the database. They include unique identifiers for key fields to prevent duplicates, character limits for text fields to maintain uniformity and storage efficiency, non-negative constraints on numerical fields to reflect logical data values, datetime fields with default values for consistency
+# 4. Specialization-Generalization Relationship
 
-<h3>Relationships & Constraints Explanation</h3>
 
-<ul>
-  <li><strong>Video - Keyword Relationship:</strong>
-    <ul>
-      <li>Allows one video to be associated with multiple keywords and vice versa, enabling rich, multifaceted categorization and searchability of videos.</li>
-      <li>Unique combination of VideoID and KeywordID prevents duplicate associations, ensuring data integrity.</li>
-    </ul>
-  </li>
+### To understand the diversity within YouTube's content creator community, we're applying a specialization-generalization relationship to categorize creators into distinct subsets, each with unique attributes.
 
-  <li><strong>Video - Content Creators Relationship:</strong>
-    <ul>
-      <li>Defines a one-to-many relationship where a single creator can produce multiple videos, reflecting real-world content creation dynamics.</li>
-      <li>Each video is linked to one specific creator, ensuring clear attribution and simplifying content management.</li>
-    </ul>
-  </li>
-
-  <li><strong>Video - Video Categories Relationship:</strong>
-    <ul>
-      <li>One category can encompass numerous videos, facilitating organized content categorization.</li>
-      <li>Every video is assigned to a single category for simplified classification and user navigation.</li>
-    </ul>
-  </li>
-
-  <li><strong>Video - Comments Relationship:</strong>
-    <ul>
-      <li>Enables a video to have a varying number of comments, mirroring real user engagement.</li>
-      <li>Links each comment to a specific video, maintaining clarity in discussions.</li>
-    </ul>
-  </li>
-</ul>
-
-<h4>Rules & Constraints:</h4>
-
-<ul>
-  <li>Unique identifiers (VideoID, KeywordID, etc.) prevent data duplication and enable precise querying.</li>
-  <li>Character limits on titles and names ensure data uniformity and storage efficiency.</li>
-  <li>Non-negative constraints on numerical fields like views and likes reflect logical data values.</li>
-  <li>Datetime fields with default values provide temporal context while maintaining data consistency.</li>
-  <li>Indices on frequently queried columns enhance query performance.</li>
-  <li>Cascading options in foreign key relationships safeguard data integrity during updates/deletions.</li>
-</ul>
-
----
-
-# 4. Specialization-Generalization Relationship in Content Creator Analysis
-
-## Subsetting Definition for Content Creators:
-To understand the diversity within YouTube's content creator community, we're applying a specialization-generalization relationship to categorize creators into distinct subsets, each with unique attributes.
-
-## Characteristics of the Subsets:
 
 ### 1. Independent Creators:
 - **Independent Channel Name**: The personal or brand name of the creator.
@@ -174,4 +175,23 @@ Brand channels represent structured organizations with dedicated content product
 
 ---
 
+# 5. Crawler making - Data processing
+
+## basic data crawler    (Get top 100.py)
+### request the top 100 views videos of the day and according bvid ----------------- get the data and import to csv
+
+
+![Failed To Obtain Creater Information](https://cdn.discordapp.com/attachments/1136758352274260142/1185785676189401128/image.png?ex=6590dff8&is=657e6af8&hm=375ef7e332b7a74befaa2d8db0b3e171f2b0c3afa03ac7bcb10e22f5bf477003&)
+#### codes
+![Failed To Obtain Creater Information](https://cdn.discordapp.com/attachments/1136758352274260142/1185791870933151744/image.png?ex=6590e5bc&is=657e70bc&hm=972360572ee2141519dd0d03c411aac122e1610a836529fd1c4d54b32f2273d9&)
+#### excel
+
+
+## danmuku & Comments crawler: (DataCollection.py)
+### request the top 100 views videos of the day and according bvid ------------ transfer bvid into av & cid --------- crawl danmuku and comments using av and cid. 
+
+![Failed To Obtain Creater Information](https://cdn.discordapp.com/attachments/1136758352274260142/1185793533211320380/image.png?ex=6590e749&is=657e7249&hm=3ad97bec3fcb03d38f945b7f972c455711d5c474246c2cc47017013e1fd6c22b&)
+
+## Key word table:  (DataProcessing.py)
+### The jieba module is used to analyze the words of comments and select a valid word with the highest frequency of each video, export as keyword csv.
 
