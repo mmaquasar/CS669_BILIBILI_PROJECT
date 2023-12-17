@@ -1,17 +1,26 @@
-# Database Overview
+# Index
 
-## 1. Project Overview
-## 2. Create Tables
-## 3. Constraints
-## 4. Specialization-Generalization Relationship in Content Creator Analysis
-## 5. Crawler making - Data processing
-## 
-## 6. stored procedures
+### 1. Project Overview
+### 2. Create Tables
+### 3. Constraints
+### 4. Specialization-Generalization Relationship 
+### 5. Crawler making - Data processing
+### 6. stored procedures
+### 7. normalizing-eliminate data redundancy
+### 8. queries & conclusions
 
-## 1. Project Overview
+---
 
 
-## 2. CREATE TABLES
+# 1. Project Overview
+
+### The BiliTrendAnalyzer project is designed to extract and examine Bilibili's trending video data. Utilizing a web scraper
+
+### the project captures key performance indicators like views, likes, and comments to identify emerging trends in keywords and video topics with precision and clarity.
+
+---
+
+# 2. CREATE TABLES
 
 ### 1. Videos Table - Primary and Foreign Key Constraints 
 ![Videos Table PK and FK Constraints](https://cdn.discordapp.com/attachments/1136758352274260142/1169388506976620644/image.png)
@@ -24,6 +33,10 @@
 
 ### 4. ContentCreators Table Indices 
 ![ContentCreators Table Indices](https://cdn.discordapp.com/attachments/1136758352274260142/1169389907677024327/image.png)
+
+### 5. Tables
+![ContentCreators Table Indices](https://cdn.discordapp.com/attachments/1136758352274260142/1185776375077015562/image.png?ex=6590d74e&is=657e624e&hm=9d7a4163768c92becaffc90edc9c611a4aa07af4bfa5e70b27e4643bb2123031&)
+
 
 ## SQL Table Definitions:
 
@@ -91,8 +104,11 @@ CREATE TABLE Comments (
 );
 
 ```
+---
 
 # 3.Constraints
+
+### The constraints in my project primarily ensure data integrity and efficiency in the database. They include unique identifiers for key fields to prevent duplicates, character limits for text fields to maintain uniformity and storage efficiency, non-negative constraints on numerical fields to reflect logical data values, datetime fields with default values for consistency
 
 <h3>Relationships & Constraints Explanation</h3>
 
@@ -137,8 +153,7 @@ CREATE TABLE Comments (
   <li>Cascading options in foreign key relationships safeguard data integrity during updates/deletions.</li>
 </ul>
 
-
-
+---
 
 # 4. Specialization-Generalization Relationship in Content Creator Analysis
 
@@ -157,5 +172,6 @@ Independent creators function without formal ties to larger entities, focusing o
 - **Official Contact Information**: Direct communication channels like email, phone numbers, etc.
 Brand channels represent structured organizations with dedicated content production and management teams.
 
+---
 
-# 4. Specialization-Generalization Relationship in Content Creator Analysis
+
