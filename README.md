@@ -202,5 +202,29 @@ Brand channels represent structured organizations with dedicated content product
 
 ![Failed To Obtain Creater Information](https://cdn.discordapp.com/attachments/1136758352274260142/1185795417498206289/image.png?ex=6590e90a&is=657e740a&hm=fe6afe29c72f21baf1bf78746f72c9c94a98e9a57b8b3997bde55bf06e81b9ec&)
 
-## Refine data structure
+---
+
+# 6. Structure modify with data entry
 ![Failed To Obtain Creater Information](https://cdn.discordapp.com/attachments/1136758352274260142/1185817757929967677/image.png?ex=6590fdd8&is=657e88d8&hm=de72e977b98ca5515b877e2ecec70959abd2bf92cdfc67eb709742e17e5af2e7&)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# 9. queries & conclusions
+
+#### When I was scraping comment data from Bilibili videos, some videos had their comment sections closed due to sensitive content. At the time, I didn't pay much attention to this and simply set up the crawler to skip these videos when it encountered an error. This decision, which seemed logical, actually laid hidden pitfalls for later when I was integrating the data. Videos without comment data were like missing puzzle pieces in my dataset, preventing me from perfectly matching bvids with comments.
+
+#### This small oversight cost me dearly, making me realize that no matter how insignificant data may seem, it's all part of the bigger picture. So, I've decided to change my approach. If I encounter this situation again, I'll have the crawler create an empty file, rather than doing nothing. This way, even a blank space represents the real state of the video at that moment—an area without comments.
+
+#### This change means that in the future, no matter what data I'm handling, I'll leave a clear record, even if it's zero comments. It's not just for the sake of data integrity but also a reminder to myself to maintain rigor in my work. After all, in the world of data, nothing should be overlooked.
