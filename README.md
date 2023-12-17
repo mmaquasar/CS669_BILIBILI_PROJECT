@@ -4,8 +4,14 @@
 ## 2. Create Tables
 ## 3. Constraints
 ## 4. Specialization-Generalization Relationship in Content Creator Analysis
-## 1. CREATE TABLES
+## 5. Crawler making - Data processing
+## 
+## 6. stored procedures
 
+## 1. Project Overview
+
+
+## 2. CREATE TABLES
 
 ### 1. Videos Table - Primary and Foreign Key Constraints 
 ![Videos Table PK and FK Constraints](https://cdn.discordapp.com/attachments/1136758352274260142/1169388506976620644/image.png)
@@ -151,7 +157,5 @@ Independent creators function without formal ties to larger entities, focusing o
 - **Official Contact Information**: Direct communication channels like email, phone numbers, etc.
 Brand channels represent structured organizations with dedicated content production and management teams.
 
--- Indices for frequently queried columns
-CREATE INDEX idx_videoTitle ON Videos(VideoTitle);
-CREATE INDEX idx_keywordName ON Keywords(KeywordName);
-CREATE INDEX idx_creatorName ON ContentCreators(CreatorName);
+
+# 4. Specialization-Generalization Relationship in Content Creator Analysis
