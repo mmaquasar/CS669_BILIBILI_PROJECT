@@ -177,21 +177,25 @@ Brand channels represent structured organizations with dedicated content product
 
 # 5. Crawler making - Data processing
 
-## basic data crawler    (Get top 100.py)
-### request the top 100 views videos of the day and according bvid ----------------- get the data and import to csv
+## **Video basic data**    (Get top 100.py)
+#### request the top 100 views videos of the day and according bvid ----------------- get the data and import to csv
 
+#### codes
 
 ![Failed To Obtain Creater Information](https://cdn.discordapp.com/attachments/1136758352274260142/1185785676189401128/image.png?ex=6590dff8&is=657e6af8&hm=375ef7e332b7a74befaa2d8db0b3e171f2b0c3afa03ac7bcb10e22f5bf477003&)
-#### codes
-![Failed To Obtain Creater Information](https://cdn.discordapp.com/attachments/1136758352274260142/1185791870933151744/image.png?ex=6590e5bc&is=657e70bc&hm=972360572ee2141519dd0d03c411aac122e1610a836529fd1c4d54b32f2273d9&)
 #### excel
 
+![Failed To Obtain Creater Information](https://cdn.discordapp.com/attachments/1136758352274260142/1185791870933151744/image.png?ex=6590e5bc&is=657e70bc&hm=972360572ee2141519dd0d03c411aac122e1610a836529fd1c4d54b32f2273d9&)
 
-## danmuku & Comments crawler: (DataCollection.py)
-### request the top 100 views videos of the day and according bvid ------------ transfer bvid into av & cid --------- crawl danmuku and comments using av and cid. 
+
+
+## **danmuku & Comments crawler**: (DataCollection.py)
+#### request the top 100 views videos of the day and according bvid ------------ transfer bvid into av & cid --------- crawl danmuku and comments using av and cid. 
+
 
 ![Failed To Obtain Creater Information](https://cdn.discordapp.com/attachments/1136758352274260142/1185793533211320380/image.png?ex=6590e749&is=657e7249&hm=3ad97bec3fcb03d38f945b7f972c455711d5c474246c2cc47017013e1fd6c22b&)
 
-## Key word table:  (DataProcessing.py)
-### The jieba module is used to analyze the words of comments and select a valid word with the highest frequency of each video, export as keyword csv.
+## **Key word table**:  (DataProcessing.py)
+#### The jieba module is used to analyze the words of comments and select a valid word with the highest frequency of each video, export as keyword csv.
 
+![Failed To Obtain Creater Information](https://cdn.discordapp.com/attachments/1136758352274260142/1185795417498206289/image.png?ex=6590e90a&is=657e740a&hm=fe6afe29c72f21baf1bf78746f72c9c94a98e9a57b8b3997bde55bf06e81b9ec&)
