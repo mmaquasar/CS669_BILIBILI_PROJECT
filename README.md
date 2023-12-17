@@ -5,9 +5,10 @@
 ### 3. Constraints
 ### 4. Specialization-Generalization Relationship 
 ### 5. Crawler making - Data processing
-### 6. stored procedures
-### 7. normalizing-eliminate data redundancy
-### 8. queries & conclusions
+### 6. Structure modify with data entry
+### 7. stored procedures
+### 8. normalizing-eliminate data redundancy
+### 9. queries & conclusions
 
 ---
 
