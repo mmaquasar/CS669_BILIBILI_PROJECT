@@ -43,8 +43,6 @@
 
 # 3.Constraints
 
-### The constraints in my project primarily ensure data integrity and efficiency in the database. They include unique identifiers for key fields to prevent duplicates, character limits for text fields to maintain uniformity and storage efficiency, non-negative constraints on numerical fields to reflect logical data values, datetime fields with default values for consistency
-
 <h3>Relationships & Constraints Explanation</h3>
 
 <ul>
@@ -188,15 +186,21 @@ Brand channels represent structured organizations with dedicated content product
 
 ![Failed To Obtain Creater Information](https://cdn.discordapp.com/attachments/1136758352274260142/1185791870933151744/image.png?ex=6590e5bc&is=657e70bc&hm=972360572ee2141519dd0d03c411aac122e1610a836529fd1c4d54b32f2273d9&)
 
-
-
+---
+## bvid, aid, and cid
+### Bilibili video data, danmuku and comments are controlled by three separate IDs, These IDs require specific algorithms for translation and combination. During data retrieval, there is no fixed video ID; instead, individual IDs are used, which necessitate translation and amalgamation to be usable.
+---
 ## **danmuku & Comments crawler**: (DataCollection.py)
 #### request the top 100 views videos of the day and according bvid ------------ transfer bvid into av & cid --------- crawl danmuku and comments using av and cid. 
 
 
 ![Failed To Obtain Creater Information](https://cdn.discordapp.com/attachments/1136758352274260142/1185793533211320380/image.png?ex=6590e749&is=657e7249&hm=3ad97bec3fcb03d38f945b7f972c455711d5c474246c2cc47017013e1fd6c22b&)
 
-## **Key word table**:  (DataProcessing.py)
-#### The jieba module is used to analyze the words of comments and select a valid word with the highest frequency of each video, export as keyword csv.
+
+## **Key word table**:  (keywords.py)
+#### The jieba module is used to analyze the chinese words of danmuku and select a valid word with the highest frequency of each video, export as keyword csv.
 
 ![Failed To Obtain Creater Information](https://cdn.discordapp.com/attachments/1136758352274260142/1185795417498206289/image.png?ex=6590e90a&is=657e740a&hm=fe6afe29c72f21baf1bf78746f72c9c94a98e9a57b8b3997bde55bf06e81b9ec&)
+
+## Refine data structure
+![Failed To Obtain Creater Information](https://cdn.discordapp.com/attachments/1136758352274260142/1185817757929967677/image.png?ex=6590fdd8&is=657e88d8&hm=de72e977b98ca5515b877e2ecec70959abd2bf92cdfc67eb709742e17e5af2e7&)
