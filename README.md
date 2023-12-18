@@ -264,8 +264,25 @@ EXEC BulkInsertWithDate @BaseFilePath = 'C:\\Users\\ASUS\\Desktop\\UserTable', @
 ---
 
 # 9. queries & conclusions
+## Find the video category with the most comments from male users：
 
-## reflection（1）  Lessons from Comment Sections
+![image](https://github.com/mmaquasar/CS669_BILIBILI_PROJECT/assets/141074130/e7c91648-c686-45c8-9d97-4e2cb25c4caf)
+
+## Gender Distribution
+
+![image](https://github.com/mmaquasar/CS669_BILIBILI_PROJECT/assets/141074130/6e57c700-ad97-4540-9f12-06c3e9933824)
+
+## Which keywords are most often associated with videos.
+
+![image](https://github.com/mmaquasar/CS669_BILIBILI_PROJECT/assets/141074130/7fe0d53b-dfc3-4e06-b6bc-fccb1d24245e)
+
+## Active User 
+
+![image](https://github.com/mmaquasar/CS669_BILIBILI_PROJECT/assets/141074130/f9b95633-bb1b-4662-9135-3d745604ba89)
+
+---
+
+## Reflection（1）  Lessons from Comment Sections
 #### When I was scraping comment data from Bilibili videos, some videos had their comment sections closed due to sensitive content. At the time, I didn't pay much attention to this and simply set up the crawler to skip these videos when it encountered an error. This decision, which seemed logical, actually laid hidden pitfalls for later when I was integrating the data. Videos without comment data were like missing puzzle pieces in my dataset, preventing me from perfectly matching bvids with comments.
 
 #### This small oversight cost me dearly, making me realize that no matter how insignificant data may seem, it's all part of the bigger picture. So, I've decided to change my approach. If I encounter this situation again, I'll have the crawler create an empty file, rather than doing nothing. This way, even a blank space represents the real state of the video at that moment—an area without comments.
@@ -276,11 +293,241 @@ EXEC BulkInsertWithDate @BaseFilePath = 'C:\\Users\\ASUS\\Desktop\\UserTable', @
 
 
 
-## reflection (2）   Navigating Encoding Challenges in Data Aggregation
+## Reflection (2）   Navigating Encoding Challenges in Data Aggregation
 #### I aimed to merge multiple CSV files into a single one. Initially, I encountered encoding issues when reading the files and attempted various encodings, but to no avail.
 
 #### I realized that some files might already be in UTF-8 encoding or contain characters that GBK couldn't decode. To address this, I used the chardet library to detect the encoding of the files and only converted those that weren't already in UTF-8. Despite this, the conversion still failed for some files, forcing me to resort to the cumbersome method of manually copying this data.
 
 #### This experience has taught me the importance of planning ahead for data collection, designing the data specifications, size, and format from the outset, and striving to capture the data in its final form as much as possible, to avoid wasting excessive time during data processing.
 
+---
 
+# Future thoughs:
+
+### I'm looking to improve the web scraping aspect of my project, particularly by automating the encoding conversion for Excel files with Python at the point of data saving. This would involve developing an automated system that is compatible with my existing database structure. Another area for improvement is the temporal dimension of the database; the current lack of detailed time data limits my analysis, and I aim to focus more on temporal analysis going forward.
+
+### As for the data limits, I've been concentrating on data processing to circumvent these issues, but I recognize that this isn't a long-term solution. I should start incorporating the elements I've been managing through processing directly into the SQL database. This project has provided me with significant learning, and I've found CS669 to be a course of great value.
+
+---
+
+Full SQL code:
+
+```sql
+ALTER TABLE Videos DROP CONSTRAINT DF__Videos__ShareCou__3D5E1FD2;
+ALTER TABLE Videos DROP CONSTRAINT CK__Videos__ShareCou__3F466844;
+ALTER TABLE Videos DROP CONSTRAINT FK__Videos__CreatorI__33D4B598;
+
+
+ALTER TABLE Videos
+DROP COLUMN CreatorID,
+            ShareCount,
+            Dislike,
+            VideoLength,
+            CreatorID;
+
+ALTER TABLE Videos
+DROP COLUMN VideoLength	
+-- Select all records from Comments table
+SELECT * FROM dbo.Comments;
+
+-- Select all records from VideoCategories table
+SELECT * FROM dbo.VideoCategories;
+
+-- Select all records from VideoKeywordAssociation table
+SELECT * FROM dbo.VideoKeywordAssociation;
+
+-- Select all records from Videos table
+SELECT * FROM dbo.Videos;
+
+-- Select all records from Keywords table
+SELECT * FROM dbo.Keywords;
+
+-- Select all records from VideoCategories table
+SELECT * FROM dbo.Users;
+
+-- Delete the first row from VideoCategories table where CategoryID is 1
+DELETE FROM dbo.VideoCategories WHERE CategoryID = 1;
+
+-- Delete the first row from Videos table where VideoID is 101
+DELETE FROM dbo.Videos WHERE VideoID = 101;
+
+ALTER TABLE dbo.Users
+ADD UserName varchar(255) NOT NULL;
+
+-- Add CategoryID column to VideoTable
+ALTER TABLE dbo.Videos
+ADD CategoryID int;
+
+-- Add foreign key constraint to VideoTable for CategoryID
+ALTER TABLE dbo.Videos
+ADD CONSTRAINT FK_Videos_VideoCategories
+FOREIGN KEY (CategoryID)
+REFERENCES dbo.VideoCategories (CategoryID);
+
+
+-- Videos
+CREATE TABLE Videos (
+    VideoID VARCHAR(255) PRIMARY KEY,
+    VideoTitle VARCHAR(255),
+    Description VARCHAR(MAX), -- Changed from TEXT to VARCHAR(MAX)
+    PublishTime DATETIME DEFAULT GETDATE(),
+    Views INT CHECK (Views >= 0),
+    Likes INT CHECK (Likes >= 0)
+);
+
+-- Video-Keyword Association
+CREATE TABLE VideoKeywordAssociation (
+    VideoID VARCHAR(255) FOREIGN KEY REFERENCES Videos(VideoID),
+    KeywordID INT FOREIGN KEY REFERENCES Keywords(KeywordID),
+    PRIMARY KEY (VideoID, KeywordID)
+);
+
+-- Comments
+CREATE TABLE Comments (
+    CommentID INT PRIMARY KEY,
+    VideoID VARCHAR(255) FOREIGN KEY REFERENCES Videos(VideoID), -- Assuming reference to Videos(VideoID)
+    [User] VARCHAR(255), -- Changed User to [User], added missing comma
+    CommentText VARCHAR(MAX) -- Changed from TEXT to VARCHAR(MAX)
+);
+
+-- Users
+CREATE TABLE Users ( -- Changed USER to Users
+    Name VARCHAR(255) PRIMARY KEY, -- Changed TEXT to VARCHAR(255)
+    Gender VARCHAR(255),
+    User_Level INT
+);
+
+ALTER TABLE dbo.Comments
+ADD CONSTRAINT FK_Comments_Users
+FOREIGN KEY (UserID) REFERENCES dbo.Users(UserID);
+
+
+BULK INSERT dbo.Users
+FROM 'C:\Users\ASUS\Desktop\UserTable.csv'
+WITH
+(
+    FIELDTERMINATOR = ',',  -- CSV字段分隔符
+    ROWTERMINATOR = '\n',   -- CSV行分隔符
+    FIRSTROW = 2,           -- 如果第一行是标题行则从第二行开始
+    TABLOCK
+);
+
+BULK INSERT dbo.Keywords
+FROM 'C:\Users\ASUS\Desktop\Keywordstable.csv'
+WITH
+(
+    FIELDTERMINATOR = ',',  -- CSV字段分隔符
+    ROWTERMINATOR = '\n',   -- CSV行分隔符
+    FIRSTROW = 2,           -- 如果第一行是标题行则从第二行开始
+    TABLOCK
+);
+
+BULK INSERT dbo.VideoCategories
+FROM 'C:\Users\ASUS\Desktop\Cattable.csv'
+WITH
+(
+    FIELDTERMINATOR = ',',  -- CSV字段分隔符
+    ROWTERMINATOR = '\n',   -- CSV行分隔符
+    FIRSTROW = 2,           -- 如果第一行是标题行则从第二行开始
+    TABLOCK
+);
+
+BULK INSERT dbo.Videos
+FROM 'C:\Users\ASUS\Desktop\VideoTable.csv'
+WITH
+(
+    FIELDTERMINATOR = ',',  -- CSV字段分隔符
+    ROWTERMINATOR = '\n',   -- CSV行分隔符
+    FIRSTROW = 2,           -- 如果第一行是标题行则从第二行开始
+    TABLOCK
+);
+
+BULK INSERT dbo.VideoKeywordAssociation
+FROM 'C:\Users\ASUS\Desktop\Video-key word Association table.csv'
+WITH
+(
+    FIELDTERMINATOR = ',',  -- CSV字段分隔符
+    ROWTERMINATOR = '\n',   -- CSV行分隔符
+    FIRSTROW = 2,           -- 如果第一行是标题行则从第二行开始
+    TABLOCK
+);
+
+
+BULK INSERT dbo.Comments
+FROM 'C:\Users\ASUS\Desktop\TABLE.csv'
+WITH
+(
+    FIELDTERMINATOR = ',',  -- CSV字段分隔符
+    ROWTERMINATOR = '\n',   -- CSV行分隔符
+    FIRSTROW = 2,           -- 如果第一行是标题行则从第二行开始
+    TABLOCK
+);
+
+DELETE FROM dbo.Keywords;
+
+DELETE FROM dbo.VideoCategories;
+
+ALTER TABLE dbo.VideoKeywordAssociation
+ADD CONSTRAINT FK_VideoKeywordAssociation_Keywords
+FOREIGN KEY (KeywordID) REFERENCES dbo.Keywords(KeywordID);
+
+
+ALTER TABLE dbo.Keywords
+ADD CONSTRAINT PK_Keywords PRIMARY KEY (KeywordID);
+
+ALTER TABLE dbo.Videos
+ADD CONSTRAINT FK_Videos_VideoCategories
+FOREIGN KEY (CategoryID) REFERENCES dbo.VideoCategories(CategoryID);
+
+CREATE PROCEDURE BulkInsertWithDate
+    @BaseFilePath NVARCHAR(MAX), 
+    @FileExtension NVARCHAR(10) 
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    DECLARE @FilePath NVARCHAR(MAX);
+    DECLARE @Date NVARCHAR(10) = CONVERT(NVARCHAR(10), GETDATE(), 120); 
+    SET @Date = REPLACE(@Date, '-', '/'); 
+    SET @FilePath = @BaseFilePath + '_' + @Date + @FileExtension;
+
+    -- Construct the dynamic SQL command for the BULK INSERT
+    DECLARE @Sql NVARCHAR(MAX);
+    SET @Sql = N'BULK INSERT dbo.Users FROM ''' + REPLACE(@FilePath, '''', '''''') + ''' WITH (FIELDTERMINATOR = '','', ROWTERMINATOR = ''\n'', FIRSTROW = 2, TABLOCK)';
+
+    -- Execute the dynamic SQL command
+    EXEC sp_executesql @Sql;
+END;
+GO
+
+
+
+
+EXEC BulkInsertWithDate @BaseFilePath = 'C:\\Users\\ASUS\\Desktop\\UserTable', @FileExtension = '.csv';
+-- Repeat this call with modified paths and table names for other CSV files and tables
+
+
+SELECT TOP 10 vc.CategoryName, COUNT(*) as CommentCount
+FROM dbo.Users u
+JOIN dbo.Comments c ON u.UserID = c.UserID
+JOIN dbo.Videos v ON c.VideoID = v.VideoID
+JOIN dbo.VideoCategories vc ON v.CategoryID = vc.CategoryID
+WHERE u.Gender = '男'
+GROUP BY vc.CategoryName
+ORDER BY CommentCount DESC;
+
+SELECT Gender, COUNT(*) as UserCount FROM dbo.Users GROUP BY Gender;
+
+SELECT TOP 10 k.KeywordName, COUNT(*) as KeywordCount
+FROM dbo.VideoKeywordAssociation vka
+JOIN dbo.Keywords k ON vka.KeywordID = k.KeywordID
+GROUP BY k.KeywordName
+ORDER BY KeywordCount DESC;
+
+SELECT TOP 10 u.UserName, COUNT(*) as CommentCount
+FROM dbo.Comments c
+JOIN dbo.Users u ON c.UserID = u.UserID
+GROUP BY u.UserName
+ORDER BY CommentCount DESC;
+
+```
