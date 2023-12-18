@@ -208,9 +208,10 @@ Brand channels represent structured organizations with dedicated content product
 ![Failed To Obtain Creater Information](https://cdn.discordapp.com/attachments/1136758352274260142/1185817757929967677/image.png?ex=6590fdd8&is=657e88d8&hm=de72e977b98ca5515b877e2ecec70959abd2bf92cdfc67eb709742e17e5af2e7&)
 
 ## Refined data Structure adapting processed data:
-![Failed To Obtain Creater Information](https://cdn.discordapp.com/attachments/1136758352274260142/1186199532187435018/image.png?ex=65926166&is=657fec66&hm=1dc0612031364b6b4f11fc8ba296eeda701279e26ba1578e169e7a05b329edb9&)
+![Failed To Obtain Creater Information](https://cdn.discordapp.com/attachments/1136758352274260142/1186302382745858160/image.png?ex=6592c130&is=65804c30&hm=92afb8cd8c8f6c3a64e7ae61504d251b31aa8708f8f6cf0e5b2f754610195afd&)
 
-
+## Filled in table overview
+![Failed To Obtain Creater Information](https://cdn.discordapp.com/attachments/1136758352274260142/1186299263957864458/image.png?ex=6592be48&is=65804948&hm=365be042dd06e04142daef408cd2996da4f1ad4b021922a66ed3627064471b4e&)
 
 
 
