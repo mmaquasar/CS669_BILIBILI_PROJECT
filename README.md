@@ -213,15 +213,55 @@ Brand channels represent structured organizations with dedicated content product
 ## Filled in table overview
 ![Failed To Obtain Creater Information](https://cdn.discordapp.com/attachments/1136758352274260142/1186299263957864458/image.png?ex=6592be48&is=65804948&hm=365be042dd06e04142daef408cd2996da4f1ad4b021922a66ed3627064471b4e&)
 
+# 7. creating Procedure
+
+## Inserting Data by filename+date
+### Automatically capture real time date:
+![Failed To Obtain Creater Information](https://cdn.discordapp.com/attachments/1136758352274260142/1186408942092431461/image.png?ex=6593246e&is=6580af6e&hm=da10da286c8b23fd5af065397755e08447272564377aa21383686213e1e90432&)
+
+## SQL Definitions:
+
+```sql
+
+CREATE PROCEDURE BulkInsertWithDate
+    @BaseFilePath NVARCHAR(MAX), 
+    @FileExtension NVARCHAR(10) 
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    DECLARE @FilePath NVARCHAR(MAX);
+    DECLARE @Date NVARCHAR(10) = CONVERT(NVARCHAR(10), GETDATE(), 120); 
+    SET @Date = REPLACE(@Date, '-', '/'); 
+    SET @FilePath = @BaseFilePath + '_' + @Date + @FileExtension;
+
+    -- Construct the dynamic SQL command for the BULK INSERT
+    DECLARE @Sql NVARCHAR(MAX);
+    SET @Sql = N'BULK INSERT dbo.Users FROM ''' + REPLACE(@FilePath, '''', '''''') + ''' WITH (FIELDTERMINATOR = '','', ROWTERMINATOR = ''\n'', FIRSTROW = 2, TABLOCK)';
+
+    -- Execute the dynamic SQL command
+    EXEC sp_executesql @Sql;
+END;
+GO
 
 
+EXEC BulkInsertWithDate @BaseFilePath = 'C:\\Users\\ASUS\\Desktop\\UserTable', @FileExtension = '.csv';
+-- Repeat this call with modified paths and table names for other CSV files and tables
 
+```
+---
 
+# 8. normalizing-eliminate data redundancy
 
+#### I created a dedicated Users table to centralize all user-related information. This approach helped me reduce data redundancy and ensured the consistency and integrity of user information. Through this, I was able to manage user data more effectively, while simplifying queries and updates related to users.
 
+#### I changed the data types of certain fields from INT to BIGINT, such as FollowersCount in the ContentCreators table and Views and Likes in the Videos table. This change was made to accommodate the growth in data volume, ensuring that the database could handle a larger range of values and preventing potential data overflow issues.
 
+#### I optimized the table structure within the database, removing tables and fields that were no longer needed. This pruning helped improve the efficiency and maintainability of the database, while also reducing the need for storage space. This streamlined approach made the database more focused on core data, enhancing overall performance.
 
+#### To improve query performance, I created indexes for frequently queried fields, such as VideoTitle in the Videos table and KeywordName in the Keywords table. These indexes significantly increased the query speed for these fields, especially when dealing with large volumes of data.
 
+---
 
 # 9. queries & conclusions
 
@@ -242,3 +282,5 @@ Brand channels represent structured organizations with dedicated content product
 #### I realized that some files might already be in UTF-8 encoding or contain characters that GBK couldn't decode. To address this, I used the chardet library to detect the encoding of the files and only converted those that weren't already in UTF-8. Despite this, the conversion still failed for some files, forcing me to resort to the cumbersome method of manually copying this data.
 
 #### This experience has taught me the importance of planning ahead for data collection, designing the data specifications, size, and format from the outset, and striving to capture the data in its final form as much as possible, to avoid wasting excessive time during data processing.
+
+
