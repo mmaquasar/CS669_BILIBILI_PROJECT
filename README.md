@@ -207,7 +207,8 @@ Brand channels represent structured organizations with dedicated content product
 # 6. Structure modify with data entry
 ![Failed To Obtain Creater Information](https://cdn.discordapp.com/attachments/1136758352274260142/1185817757929967677/image.png?ex=6590fdd8&is=657e88d8&hm=de72e977b98ca5515b877e2ecec70959abd2bf92cdfc67eb709742e17e5af2e7&)
 
-
+## Refined data Structure adapting processed data:
+![Failed To Obtain Creater Information](https://cdn.discordapp.com/attachments/1136758352274260142/1186199532187435018/image.png?ex=65926166&is=657fec66&hm=1dc0612031364b6b4f11fc8ba296eeda701279e26ba1578e169e7a05b329edb9&)
 
 
 
@@ -223,8 +224,20 @@ Brand channels represent structured organizations with dedicated content product
 
 # 9. queries & conclusions
 
+## reflection（1）  Lessons from Comment Sections
 #### When I was scraping comment data from Bilibili videos, some videos had their comment sections closed due to sensitive content. At the time, I didn't pay much attention to this and simply set up the crawler to skip these videos when it encountered an error. This decision, which seemed logical, actually laid hidden pitfalls for later when I was integrating the data. Videos without comment data were like missing puzzle pieces in my dataset, preventing me from perfectly matching bvids with comments.
 
 #### This small oversight cost me dearly, making me realize that no matter how insignificant data may seem, it's all part of the bigger picture. So, I've decided to change my approach. If I encounter this situation again, I'll have the crawler create an empty file, rather than doing nothing. This way, even a blank space represents the real state of the video at that moment—an area without comments.
 
 #### This change means that in the future, no matter what data I'm handling, I'll leave a clear record, even if it's zero comments. It's not just for the sake of data integrity but also a reminder to myself to maintain rigor in my work. After all, in the world of data, nothing should be overlooked.
+
+
+
+
+
+## reflection (2）   Navigating Encoding Challenges in Data Aggregation
+#### I aimed to merge multiple CSV files into a single one. Initially, I encountered encoding issues when reading the files and attempted various encodings, but to no avail.
+
+#### I realized that some files might already be in UTF-8 encoding or contain characters that GBK couldn't decode. To address this, I used the chardet library to detect the encoding of the files and only converted those that weren't already in UTF-8. Despite this, the conversion still failed for some files, forcing me to resort to the cumbersome method of manually copying this data.
+
+#### This experience has taught me the importance of planning ahead for data collection, designing the data specifications, size, and format from the outset, and striving to capture the data in its final form as much as possible, to avoid wasting excessive time during data processing.
